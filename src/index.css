@@ -1,0 +1,59 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-night-950: #0b1020;
+  --color-night-900: #121a33;
+  --color-night-800: #1e2a4a;
+  --color-night-700: #2c3b63;
+  --color-moon: #f5e6b8;
+  --color-blood: #e0435a;
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --animate-fade-in: fade-in 250ms ease-out;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  @apply bg-night-950 text-slate-100 antialiased;
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+input {
+  user-select: text;
+}
+
+/* Fundo muda com a fase, para todos saberem de relance em que momento o jogo está. */
+.phase-bg {
+  background: var(--color-night-950);
+  transition: background 600ms ease;
+}
+
+.phase-bg[data-phase='night'] {
+  background: radial-gradient(ellipse 120% 60% at 50% 0%, #1d2257 0%, #070a16 70%);
+}
+
+.phase-bg[data-phase='morning'],
+.phase-bg[data-phase='day'] {
+  background: radial-gradient(ellipse 120% 60% at 50% 0%, #6b4a1f 0%, #22243a 55%, #141a2e 100%);
+}
+
+.phase-bg[data-phase='over'] {
+  background: radial-gradient(ellipse 120% 60% at 50% 0%, #3a2350 0%, #0b1020 70%);
+}
