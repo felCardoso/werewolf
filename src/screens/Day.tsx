@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { RoleCard } from '../components/RoleCard'
+import { Roster } from '../components/Roster'
 import { Button, Card, PlayerList, Screen } from '../components/ui'
 import { alivePlayers, eliminate, getPlayer } from '../game/engine'
 import { useGame, useStore } from '../store'
@@ -44,15 +45,15 @@ export function Day() {
   if (stage === 'discuss') {
     return (
       <Screen
-        title={`💬 Discussão — Dia ${game.round}`}
+        title="💬 Discussão"
         subtitle="Quem são os assassinos?"
         footer={<Button onClick={() => setStage('vote')}>Ir para a votação</Button>}
       >
         <div className="flex flex-col gap-4">
           {game.settings.discussionSeconds > 0 && <Timer seconds={game.settings.discussionSeconds} />}
           <Card>
-            <p className="mb-2 font-semibold text-slate-300">Vivos ({alive.length})</p>
-            <p className="text-slate-400">{alive.map((p) => p.name).join(' · ')}</p>
+            <p className="mb-2 font-semibold text-slate-300">Jogadores</p>
+            <Roster game={game} />
           </Card>
         </div>
       </Screen>

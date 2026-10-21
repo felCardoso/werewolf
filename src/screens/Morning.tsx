@@ -11,8 +11,8 @@ export function Morning() {
 
   return (
     <Screen
-      title={`☀️ Dia ${game.round}`}
-      subtitle="A cidade acorda..."
+      title="A cidade acorda..."
+      subtitle="Coloquem o celular no centro da mesa"
       footer={<Button onClick={() => update(startDay)}>{game.winner ? 'Ver resultado' : 'Começar discussão'}</Button>}
     >
       <div className="flex h-full flex-col items-center justify-center gap-6 text-center">

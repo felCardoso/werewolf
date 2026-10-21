@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Handoff } from '../components/Handoff'
+import { HoldToReveal } from '../components/HoldToReveal'
 import { RoleCard } from '../components/RoleCard'
 import { Button, Screen } from '../components/ui'
 import { nextReveal, revealDone, startNight } from '../game/engine'
@@ -9,6 +10,7 @@ export function Reveal() {
   const game = useGame()
   const update = useStore((s) => s.update)
   const [showing, setShowing] = useState(false)
+  const [seen, setSeen] = useState(false)
 
   if (revealDone(game)) {
     return (
@@ -33,24 +35,28 @@ export function Reveal() {
   return (
     <Screen
       title={player.name}
-      subtitle="Sua função secreta é"
+      subtitle="Segure a carta para ver sua função secreta"
       footer={
         <Button
+          disabled={!seen}
           onClick={() => {
             setShowing(false)
+            setSeen(false)
             update(nextReveal)
           }}
         >
-          Entendi — esconder
+          {seen ? 'Já vi — passar o celular' : 'Veja sua função primeiro'}
         </Button>
       }
     >
-      <RoleCard role={player.role} />
-      {partners.length > 0 && (
-        <p className="mt-4 text-center text-slate-300">
-          Seus parceiros: <strong className="text-blood">{partners.map((p) => p.name).join(', ')}</strong>
-        </p>
-      )}
+      <HoldToReveal onReveal={() => setSeen(true)}>
+        <RoleCard role={player.role} />
+        {partners.length > 0 && (
+          <p className="mt-4 text-center text-slate-300">
+            Seus parceiros: <strong className="text-blood">{partners.map((p) => p.name).join(', ')}</strong>
+          </p>
+        )}
+      </HoldToReveal>
     </Screen>
   )
 }

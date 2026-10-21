@@ -25,7 +25,7 @@ export function Button({
 /** Layout de tela cheia: conteúdo rolável e ações fixas no rodapé. */
 export function Screen({ title, subtitle, children, footer }: { title?: ReactNode; subtitle?: ReactNode; children?: ReactNode; footer?: ReactNode }) {
   return (
-    <div className="mx-auto flex h-full max-w-md flex-col px-4 pt-[max(1rem,env(safe-area-inset-top))]">
+    <div className="mx-auto flex h-full max-w-md flex-col px-4 pt-2">
       {(title || subtitle) && (
         <header className="pb-4 pt-2 text-center">
           {title && <h1 className="text-2xl font-bold">{title}</h1>}

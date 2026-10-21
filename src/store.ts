@@ -15,6 +15,10 @@ interface SetupDraft {
 interface Store {
   setup: SetupDraft
   game: GameState | null
+  /** Já viu as regras alguma vez (abre sozinho na primeira visita). */
+  seenRules: boolean
+  rulesOpen: boolean
+  setRulesOpen: (open: boolean) => void
   updateSetup: (patch: Partial<SetupDraft>) => void
   startGame: () => void
   update: (fn: (g: GameState) => GameState) => void
@@ -33,6 +37,9 @@ export const useStore = create<Store>()(
         settings: engine.DEFAULT_SETTINGS,
       },
       game: null,
+      seenRules: false,
+      rulesOpen: false,
+      setRulesOpen: (open) => set(open ? { rulesOpen: true } : { rulesOpen: false, seenRules: true }),
       updateSetup: (patch) =>
         set(({ setup }) => {
           const next = { ...setup, ...patch }
@@ -49,7 +56,11 @@ export const useStore = create<Store>()(
       },
       quitGame: () => set({ game: null }),
     }),
-    { name: 'cidade-dorme', version: 1 },
+    {
+      name: 'cidade-dorme',
+      version: 1,
+      partialize: ({ setup, game, seenRules }) => ({ setup, game, seenRules }),
+    },
   ),
 )
 

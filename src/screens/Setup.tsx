@@ -22,7 +22,7 @@ function Stepper({ label, value, min, max, onChange }: { label: string; value: n
 }
 
 export function Setup() {
-  const { setup, updateSetup, startGame } = useStore()
+  const { setup, updateSetup, startGame, setRulesOpen } = useStore()
   const { names, counts, autoCounts, settings } = setup
   const [tried, setTried] = useState(false)
   const error = validateSetup(names, counts)
@@ -39,6 +39,9 @@ export function Setup() {
         <>
           {tried && error && <p className="text-center text-sm text-blood">{error}</p>}
           <Button onClick={() => (error ? setTried(true) : startGame())}>Começar jogo</Button>
+          <Button variant="ghost" onClick={() => setRulesOpen(true)}>
+            📖 Como jogar
+          </Button>
         </>
       }
     >
